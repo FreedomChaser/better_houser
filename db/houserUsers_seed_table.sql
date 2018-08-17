@@ -1,0 +1,1 @@
+create table houserUsers(userid serial primary key, username VARCHAR(100) UNIQUE, encryptedPassword char(80))

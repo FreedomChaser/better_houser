@@ -9,6 +9,7 @@ export default class Login extends Component{
             username: '',
             password: ''
         }
+        this.registerUser = this.registerUser.bind(this)
     }
 
     registerUser(){
@@ -17,7 +18,7 @@ export default class Login extends Component{
             password: this.state.password
         })
         //add a .then that redirects them to the dashboard
-        //build out nav and routes to do so
+        .then(this.props.history.push('/dashboard'))
     }
 
     render(){
@@ -27,8 +28,8 @@ export default class Login extends Component{
                 <input onChangej={e => this.setState({username: e.target.value})}></input>
                 <p>Password</p>
                 <input onChangej={e => this.setState({password: e.target.value})}></input>
-                <button onClick={loginUser}>Login</button>
-                <button onClick={registerUser}>Register</button>
+                {/* <button onClick={loginUser}>Login</button> */}
+                <button onClick={this.registerUser}>Register</button>
             </div>
         )
     }
