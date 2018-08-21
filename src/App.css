@@ -20,3 +20,8 @@ then have that added as the alt tag */
   width: 150px;
   object-fit: contain
 }
+.imgOut{
+  height: 500px;
+  width: 600px;
+  object-fit: contain
+}
