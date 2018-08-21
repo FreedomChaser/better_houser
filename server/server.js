@@ -51,18 +51,26 @@ app.post('/api/login', async (req, res) => {
     let salt = await bcrypt.genSalt(10)
     
     let foundUser = await db.find_user(username)
-    
-    
-    if(foundUser[0]){
-        if(bcrypt.hash(password, salt) === foundUser.password){
+    console.log(foundUser)
+
+    let matchedPass = await bcrypt.compare(password, foundUser.encryptedPassword, function(err, res){
+        if(res){
             req.session.userid = foundUser.userid
-            res.sendStatus(200)
+            res.status(200).send(req.session.userid)
+            console.log(req.session.userid)
+        }else{
+            res.sendStatus(403)
         }
-    }else{
-        res.sendStatus(403)
-    }
-
-
+    })
+    
+    // if(foundUser[0]){
+    //     if(bcrypt.hash(password, salt) === foundUser[0].password){
+    //         req.session.userid = foundUser[0].userid
+    //         res.sendStatus(200)
+    //     }else{
+    //         res.sendStatus(403)
+    //     }
+    // }
 })
 
 app.post('/api/logout', (req, res) => {
