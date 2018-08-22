@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {updateUserid} from '../ducks/reducer'
+import {connect} from 'react-redux'
 
-export default class Login extends Component{
+class Login extends Component{
     constructor(){
         super()
 
@@ -13,27 +15,42 @@ export default class Login extends Component{
         this.loginUser = this.loginUser.bind(this)
     }
 
+    //in login and register load userid to reducer
     registerUser(){
-        axios.post('/api/newUser', {
-            username: this.state.username,
-            password: this.state.password
+        if(!this.state.username || !this.state.password){
+            return alert('Please fill in all fields')
+        }else{
+            axios.post('/api/newUser', {
+                username: this.state.username,
+                password: this.state.password
         })
         //add a .then that redirects them to the dashboard
-        .then(()=>{this.props.history.push('/dashboard')})
+        .then((res)=>{
+            this.props.updateUserid(res.data.userid)
+            this.props.history.push('/dashboard')
+        
+    })
         .catch((err) => {
+            console.log(err)
             alert('Username already exists, if you have previously registered with this site please use login')
         })
-    }
+    }}
     loginUser(){
+        if(!this.state.username || !this.state.password){
+            return alert('Please fill in all fields')
+        }else{
         axios.post('/api/login', {
             username: this.state.username,
             password: this.state.password
         })
-        .then(() => {this.props.history.push('/dashboard')})
+        .then((res) => {
+            this.props.updateUserid(res.data.userid)
+            this.props.history.push('/dashboard')})
         .catch(err => {
+            console.log('login', err)
             alert('User not found')
         })
-    }
+    }}
 
     render(){
         return(
@@ -48,3 +65,5 @@ export default class Login extends Component{
         )
     }
 }
+
+export default connect(null, {updateUserid}) (Login)

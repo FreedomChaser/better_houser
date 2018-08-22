@@ -1,0 +1,2 @@
+insert into homes (userid, home_name, description, loan, monthly_mortgage, recommended_rent, desired_rent, address, city, img_alt, img_url, usState, zip)
+values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)

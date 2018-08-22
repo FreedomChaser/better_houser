@@ -1,20 +1,24 @@
 //set up reducer middleware so I can send an axios.post from here with all the info
 //stored from wizards
+//set up userid and recommended rent
 
 const initialState = {
+    userid: '',
     property_name: '',
     property_description: '',
     address: '', 
     city: '',
     usState: '',
-    zip: '',
+    zip: 0,
     img_url: '',
     img_alt: '',
-    loan_amount: '',
-    monthly_mortgage: '',
-    desired_rent: ''
+    loan_amount: 0,
+    monthly_mortgage: 0,
+    desired_rent: 0,
+    recommended_rent: 0
 }
 
+const UPDATE_USERID = 'UPDATE_USERID'
 const UPDATE_PROPERTY_NAME = 'UPDATE_PROPERTY_NAME'
 const UPDATE_PROPERTY_DESCRIPTION = 'UPDATE_PROPERTY_DESCRIPTION'
 const UPDATE_ADDRESS = 'UPDATE_ADDRESS'
@@ -26,7 +30,14 @@ const UPDATE_IMG_ALT = 'UPDATE_IMG_ALT'
 const UPDATE_LOAN_AMOUNT = 'UPDATE_LOAN_AMOUNT'
 const UPDATE_MONTHLY_MORTGAGE = 'UPDATE_MONTHLY_MORTGAGE'
 const UPDATE_DESIRED_RENT = 'UPDATE_DESIRED_RENT'
+const UPDATE_RECOMMENDED_RENT = 'UPDATE_RECOMMENDED_RENT'
 
+export function updateUserid(userid){
+    return{
+        type: UPDATE_USERID,
+        payload: userid
+    }
+}
 export function updatePropertyName(property_name){
     return{
         type: UPDATE_PROPERTY_NAME,
@@ -93,9 +104,18 @@ export function updateDesiredRent(desired_rent){
         payload: desired_rent
     }
 }
+export function updateRecommendedRent(recommended_rent){
+    return{
+        type: UPDATE_RECOMMENDED_RENT,
+        payload: recommended_rent
+    }
+}
 
 function reducer(state = initialState, action){
     switch(action.type){
+        case UPDATE_USERID:
+            return Object.assign({}, state, {userid: action.payload})
+
         case UPDATE_PROPERTY_NAME:
             return Object.assign({}, state, {property_name: action.payload})
     
@@ -128,6 +148,9 @@ function reducer(state = initialState, action){
     
         case UPDATE_DESIRED_RENT:
             return Object.assign({}, state, {desired_rent: action.payload})
+
+        case UPDATE_RECOMMENDED_RENT:
+            return Object.assign({}, state, {recommended_rent: action.payload})
 
     default: return state
     }

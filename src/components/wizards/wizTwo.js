@@ -2,10 +2,22 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
-import {updateAddress, updateCity, updateState, updateZip} from '../../ducks/reducer'
+import {updateUserid, updateAddress, updateCity, updateState, updateZip} from '../../ducks/reducer'
+import axios from 'axios'
 
 class WizTwo extends Component{
+    componentDidMount(){
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+            }).catch(err => {
+                this.props.history.push('/')
+            })
+        }
+    }
+    
     render(){
+        const {updateAddress, updateCity, updateState, updateZip} = this.props
         return(
             <div>
                 <WizHeader/>
@@ -31,9 +43,10 @@ class WizTwo extends Component{
 }
 
 function mapStateToProps(state){
-    const {address, city, usState, zip} = state
+    const {userid, address, city, usState, zip} = state
 
     return{
+        userid,
         address,
         city,
         usState,
@@ -41,4 +54,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {updateAddress, updateCity, updateState, updateZip}) (WizTwo)
+export default connect(mapStateToProps, {updateUserid, updateAddress, updateCity, updateState, updateZip}) (WizTwo)

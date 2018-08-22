@@ -2,18 +2,22 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
-import {updateImgUrl, updateImgAlt} from '../../ducks/reducer'
+import {updateUserid, updateImgUrl, updateImgAlt} from '../../ducks/reducer'
+import axios from 'axios'
 
 class WizThree extends Component{
-    constructor(){
-        super()
-
-        this.state = {
-            img_url: '',
-            img_alt: '',
+    componentDidMount(){
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+            }).catch(err => {
+                this.props.history.push('/')
+            })
         }
     }
+
     render(){
+        const {updateImgAlt, updateImgUrl} = this.props
         return(
             <div>
                 <WizHeader/>
@@ -21,7 +25,7 @@ class WizThree extends Component{
                 {/* 5 dots */}
                 {/* output */}
                 {/* ask about how state works with a redux method and component */}
-                <img src={this.state.img_url} alt={this.state.img_alt} className='imgOut'/>
+                <img src={this.props.img_url} alt={this.props.img_alt} className='imgOut'/>
                 <p>Image url</p>
                 <input onChange={e => updateImgUrl(e.target.value)}/>
                 <p>Image alt text</p>
@@ -34,12 +38,13 @@ class WizThree extends Component{
 }
 
 function mapStateToProps(state){
-    const {img_url, img_alt} = state
+    const {userid, img_url, img_alt} = state
 
     return{
+        userid,
         img_url,
         img_alt
     }
 }
 
-export default connect(mapStateToProps, {updateImgUrl, updateImgAlt}) (WizThree)
+export default connect(mapStateToProps, {updateImgUrl, updateImgAlt, updateUserid}) (WizThree)

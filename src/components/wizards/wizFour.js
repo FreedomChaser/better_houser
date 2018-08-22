@@ -2,10 +2,22 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
-import {updateLoanAmount, updateMonthlyMortgage} from '../../ducks/reducer'
+import {updateUserid, updateLoanAmount, updateMonthlyMortgage} from '../../ducks/reducer'
+import axios from 'axios'
 
 class WizFour extends Component{
+    componentDidMount(){
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+            }).catch(err => {
+                this.props.history.push('/')
+            })
+        }
+    }
+
     render(){
+        const {updateLoanAmount, updateMonthlyMortgage} = this.props
         return(
             <div>
                 <WizHeader/>
@@ -23,12 +35,13 @@ class WizFour extends Component{
 }
 
 function mapStateToProps(state){
-    const {loan_amount, monthly_mortgage} = state
+    const {userid, loan_amount, monthly_mortgage} = state
 
     return{
+        userid,
         loan_amount,
         monthly_mortgage
     }
 }
 
-export default connect(mapStateToProps, {updateLoanAmount, updateMonthlyMortgage}) (WizFour)
+export default connect(mapStateToProps, {updateUserid, updateLoanAmount, updateMonthlyMortgage}) (WizFour)

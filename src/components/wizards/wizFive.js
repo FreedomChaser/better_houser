@@ -2,27 +2,31 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
-import {updateDesiredRent} from '../../ducks/reducer'
+import {updateUserid, updateDesiredRent, updateRecommendedRent} from '../../ducks/reducer'
+import axios from 'axios'
 
 class WizFive extends Component{
-    constructor(){
-        super()
-
-        this.state ={
-            recommendedRent: 0,
-            monthlyMortgage: 0,
-        }
-    }
-    
     componentDidMount(){
-        //pull monthly mortgage off reducer and set to state
-        let {monthlyMortgage} = this.state
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+                let {monthly_mortgage} = this.props
 
-        let percentNum = monthlyMortgage * .25
+                let percentNum = monthly_mortgage * .25
 
-        let rent = percentNum + monthlyMortgage
+                let rent = percentNum + monthly_mortgage
 
-        return rent        
+        updateRecommendedRent(rent) 
+            }).catch(err => {
+                this.props.history.push('/')
+            })
+        }
+               
+    }
+
+    completeBtn(){
+        axios.post('/api/complete', {...this.props.state})
+        .then(() => this.props.history.push('/dashboard'))
     }
 
     render(){
@@ -32,23 +36,25 @@ class WizFive extends Component{
                 <p>Step 5</p>
                 {/* 5 dots */}
                 {/* add rent variable */}
-                <p>Recommended Rent {this.componentDidMount}</p>
+                <p>Recommended Rent {this.props.recommended_rent}</p>
                 <p>Desired Rent</p>
                 <input onChange={e => updateDesiredRent(e.target.value)}/>
                 <Link to='/wizardFour'><button>Previous Step</button></Link>
                 {/* figure out how you wantto save this to db */}
-                <button>Complete</button>
+                <button onClick={() => this.completeBtn()}>Complete</button>
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    const {desiredRent} = state
 
     return{
-        desiredRent
+        //return state and do axios call here? or make a new func comp
+        state
     }
 }
 
-export default connect(mapStateToProps, {updateDesiredRent})(WizFive)
+export default connect(mapStateToProps, {updateUserid, updateDesiredRent, updateRecommendedRent})(WizFive)
+
+//_debounce

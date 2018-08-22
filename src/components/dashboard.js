@@ -1,6 +1,20 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import axios from 'axios'
+import {updateUserid} from '../ducks/reducer'
+//add the sessions block on each route
 
-export default class Dashboard extends React.Component{
+class Dashboard extends React.Component{
+    componentDidMount(){
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+            }).catch(err => {
+                this.props.history.push('/')
+            })
+        }
+    }
+
     render(){
         //add state 
         //finish filling out this page with info from db
@@ -25,3 +39,13 @@ export default class Dashboard extends React.Component{
         )
     }
 }
+
+function mapStateToProps(state){
+    const {userid} = state
+
+    return{
+        userid
+    }
+}
+
+export default connect(mapStateToProps, {updateUserid}) (Dashboard)

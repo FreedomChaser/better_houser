@@ -3,9 +3,20 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
 import {updatePropertyName} from '../../ducks/reducer'
-import {updatePropertyDescription} from '../../ducks/reducer'
+import {updatePropertyDescription, updateUserid} from '../../ducks/reducer'
+import axios from 'axios'
 
 class WizOne extends Component{
+    componentDidMount(){
+        if(!this.props.userid){
+            axios.get('/api/confirmUser').then(res => {
+                this.props.updateUserid(res)
+            }).catch(err => {
+                this.props.history.push('/')
+            })
+        }
+    }
+    
     render(){
         const {updatePropertyDescription, updatePropertyName} = this.props
         return(
@@ -26,11 +37,12 @@ class WizOne extends Component{
 }
 
 function mapStateToProps(state){
-    const {property_name, property_description} = state
+    const {userid, property_name, property_description} = state
 
     return{
+        userid,
         property_name,
         property_description
     }
 }
-export default connect(mapStateToProps, {updatePropertyName, updatePropertyDescription}) (WizOne)
+export default connect(mapStateToProps, {updatePropertyName, updatePropertyDescription, updateUserid}) (WizOne)
