@@ -22,6 +22,12 @@ class WizTwo extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 2</p>
+                <img src='step_completed'/>
+                <img src='step_active'/>
+                <img src='step_inactive'/>
+                <img src='step_inactive'/>
+                <img src='step_inactive'/>
+
                 {/* 5 dots */}
                 <p>Address</p>
                 <input onChange={e => updateAddress(e.target.value)}/>

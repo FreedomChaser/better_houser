@@ -22,6 +22,11 @@ class WizFour extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 4</p>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_active'/>
+                <img src='step_inactive'/>
                 {/* 5 dots */}
                 <p>Loan Amount</p>
                 <input onChange={e => updateLoanAmount(e.target.value)}/>

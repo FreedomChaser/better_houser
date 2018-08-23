@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
 import {updateUserid, updateImgUrl, updateImgAlt} from '../../ducks/reducer'
 import axios from 'axios'
+import _ from 'lodash'
 
 class WizThree extends Component{
     componentDidMount(){
@@ -18,10 +19,16 @@ class WizThree extends Component{
 
     render(){
         const {updateImgAlt, updateImgUrl} = this.props
+        // let displayImg =
         return(
             <div>
                 <WizHeader/>
                 <p>Step 3</p>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_active'/>
+                <img src='step_inactive'/>
+                <img src='step_inactive'/>
                 {/* 5 dots */}
                 {/* output */}
                 {/* ask about how state works with a redux method and component */}

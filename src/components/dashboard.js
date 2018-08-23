@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
 import {updateUserid} from '../ducks/reducer'
+import {Link} from 'react-router-dom'
 //add the sessions block on each route
 
 class Dashboard extends React.Component{
@@ -13,6 +14,8 @@ class Dashboard extends React.Component{
                 this.props.history.push('/')
             })
         }
+        axios.get(`/api/userHomes/${this.props.userid}`)
+
     }
 
     render(){
@@ -22,7 +25,7 @@ class Dashboard extends React.Component{
         //create filter
         return(
             <div>
-                <button>Add new property</button>
+                <Link to='/wizardOne'><button>Add new property</button></Link>
                 {/* build out wizard routes */}
                 {/* link add new property to wizOne route */}
                 <p>List properties with "desired rent" greater than: $<input placeholder='0'></input>
@@ -32,7 +35,7 @@ class Dashboard extends React.Component{
                 <div>
                     <p>Home Listings</p>
                     {/* add alt tag variable once db's built out */}
-                    <img src='https://utahnonprofits.org/media/k2/items/cache/71601b6fd7fc74a9f4eea8e6c1b43d35_XL.jpg' className='imgThumb'/>
+                    <img src={`${this.props.img_url}`} className='imgThumb' alt={`${this.props.img_alt}`}/>
                     {/* add a componentDidMount to pull a get req for all houses for this userid */}
                 </div> 
             </div>
@@ -41,10 +44,36 @@ class Dashboard extends React.Component{
 }
 
 function mapStateToProps(state){
-    const {userid} = state
+    const {
+            userid, 
+            property_name, 
+            property_description, 
+            address, 
+            city, 
+            usState, 
+            zip,
+            img_url,
+            img_alt,
+            loan_amount,
+            monthly_mortgages,
+            desired_rent,
+            recommended_rent 
+        } = state
 
     return{
-        userid
+        userid,
+        property_name, 
+        property_description, 
+        address, 
+        city, 
+        usState, 
+        zip,
+        img_url,
+        img_alt,
+        loan_amount,
+        monthly_mortgages,
+        desired_rent,
+        recommended_rent 
     }
 }
 

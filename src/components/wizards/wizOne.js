@@ -23,6 +23,11 @@ class WizOne extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 1</p>
+                <img src='step_active.png' alt='filled in green circle'/>
+                <img src='step_inactive.png' alt='faded out green circle'/>
+                <img src='step_inactive.png' alt='faded out green circle'/>
+                <img src='step_inactive.png' alt='faded out green circle'/>
+                <img src='step_inactive.png' alt='faded out green circle'/>
                 {/* 5 dots imgs */}
                 <p>Property Name</p>
                 <input onChange={e => updatePropertyName(e.target.value)}/>

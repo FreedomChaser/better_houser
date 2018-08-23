@@ -146,11 +146,6 @@ app.post('/api/complete', async (req, res) => {
     res.sendStatus(200)
 })
 
-app.post('/api/logout', (req, res) => {
-    req.session.destroy()
-    res.sendStatus(200)
-})
-
 app.get('/api/confirmUser', (req, res) => {
     if (req.session.userid) {
         res.status(200).send(req.session.userid)
@@ -158,6 +153,12 @@ app.get('/api/confirmUser', (req, res) => {
         res.sendStatus(403)
     }
 })
+
+app.post('/api/logout', (req, res) => {
+    req.session.destroy()
+    res.sendStatus(200)
+})
+
 
 
 app.listen(SERVER_PORT, () => {

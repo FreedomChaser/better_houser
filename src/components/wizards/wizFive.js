@@ -10,22 +10,40 @@ class WizFive extends Component{
         if(!this.props.userid){
             axios.get('/api/confirmUser').then(res => {
                 this.props.updateUserid(res)
-                let {monthly_mortgage} = this.props
+                // .then(() => {
+                //     
 
-                let percentNum = monthly_mortgage * .25
-
-                let rent = percentNum + monthly_mortgage
-
-        updateRecommendedRent(rent) 
+                // })
+                
             }).catch(err => {
                 this.props.history.push('/')
             })
         }
-               
+            let {monthly_mortgage} = this.props
+    
+            let percentNum = monthly_mortgage * .25
+
+            let rent = percentNum + monthly_mortgage
+
+            updateRecommendedRent(rent)       
     }
 
     completeBtn(){
-        axios.post('/api/complete', {...this.props.state})
+        axios.post('/api/complete', {
+            userid: this.props.userid, 
+            property_name: this.props.property_name, 
+            property_description: this.props.property_description, 
+            address: this.props.address, 
+            city: this.props.city, 
+            usState: this.props.usState, 
+            zip: this.props.zip, 
+            img_url: this.props.img_url,
+            img_alt: this.props.img_alt,
+            loan_amount: this.props.loan_amount,
+            monthly_mortgage: this.props.monthly_mortgage,
+            desired_rent: this.props.desired_rent,
+            recommended_rent: this.props.recommended_rent
+        })
         .then(() => this.props.history.push('/dashboard'))
     }
 
@@ -34,6 +52,11 @@ class WizFive extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 5</p>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_completed'/>
+                <img src='step_inactive'/>
                 {/* 5 dots */}
                 {/* add rent variable */}
                 <p>Recommended Rent {this.props.recommended_rent}</p>
@@ -48,10 +71,36 @@ class WizFive extends Component{
 }
 
 function mapStateToProps(state){
-
+    const {
+            userid, 
+            property_name, 
+            property_description, 
+            address, 
+            city, 
+            usState, 
+            zip, 
+            img_url,
+            img_alt,
+            loan_amount,
+            monthly_mortgage,
+            desired_rent,
+            recommended_rent
+        } = state
     return{
         //return state and do axios call here? or make a new func comp
-        state
+        userid, 
+        property_name, 
+        property_description, 
+        address, 
+        city, 
+        usState, 
+        zip, 
+        img_url,
+        img_alt,
+        loan_amount,
+        monthly_mortgage,
+        desired_rent,
+        recommended_rent
     }
 }
 
