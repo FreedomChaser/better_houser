@@ -111,6 +111,8 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/complete', async (req, res) => {
     const db = req.app.get('db')
+// console.log(req.body)
+
     let {
         userid,
         property_name,
@@ -152,6 +154,25 @@ app.get('/api/confirmUser', (req, res) => {
     }else {
         res.sendStatus(403)
     }
+})
+
+app.get('/api/userHomes/:userid', async (req, res) => {
+    const db = req.app.get('db')
+    const {userid} = req.params
+
+    let findHouses = await db.find_houses(userid)
+    // console.log(findHouses)
+    res.status(200).send(findHouses)
+})
+
+app.delete('/api/deleteHouse/:userid', async (req, res) => {
+    const db = req.app.get('db')
+    const {userid} = req.params
+    const {loan_amount, monthly_mortgage, recommended_rent, desired_rent, address, city} = req.body
+
+    let deleteHouse = await db.delete_house(userid, loan_amount, monthly_mortgage, recommended_rent, desired_rent, address, city)
+
+    res.sendStatus(200)
 })
 
 app.post('/api/logout', (req, res) => {

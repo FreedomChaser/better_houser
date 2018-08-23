@@ -24,14 +24,15 @@ class WizThree extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 3</p>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_active'/>
-                <img src='step_inactive'/>
-                <img src='step_inactive'/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_active.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
                 {/* 5 dots */}
                 {/* output */}
                 {/* ask about how state works with a redux method and component */}
+                {/* fix preview box*/}
                 <img src={this.props.img_url} alt={this.props.img_alt} className='imgOut'/>
                 <p>Image url</p>
                 <input onChange={e => updateImgUrl(e.target.value)}/>

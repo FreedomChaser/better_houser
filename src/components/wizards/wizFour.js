@@ -16,24 +16,32 @@ class WizFour extends Component{
         }
     }
 
+    formPush(){
+        if(!this.props.loan_amount && !this.props.monthly_mortgage){
+            alert('Please fill in all fields')
+        }else{
+           this.props.history.push('/wizardFive') 
+        }
+    }
+
     render(){
         const {updateLoanAmount, updateMonthlyMortgage} = this.props
         return(
             <div>
                 <WizHeader/>
                 <p>Step 4</p>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_active'/>
-                <img src='step_inactive'/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_active.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
                 {/* 5 dots */}
                 <p>Loan Amount</p>
                 <input onChange={e => updateLoanAmount(e.target.value)}/>
                 <p>Monthly Mortgage</p>
                 <input onChange={e => updateMonthlyMortgage(e.target.value)}/>
                 <Link to='/wizardThree'><button>Previous Step</button></Link>
-                <Link to='/wizardFive'><button>Next Step</button></Link>
+                <button onClick={() => this.formPush()}>Next Step</button>
             </div>
         )
     }

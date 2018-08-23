@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import WizHeader from './wizHeader'
 import {updatePropertyName} from '../../ducks/reducer'
@@ -14,6 +14,14 @@ class WizOne extends Component{
             }).catch(err => {
                 this.props.history.push('/')
             })
+        }
+    }
+
+    formPush(){
+        if(!this.props.property_name && !this.props.property_description){
+            alert('Please fill in all fields')
+        }else{
+           this.props.history.push('/wizardTwo') 
         }
     }
     
@@ -33,9 +41,8 @@ class WizOne extends Component{
                 <input onChange={e => updatePropertyName(e.target.value)}/>
                 <p>Property Description</p>
                 <input onChange={e => updatePropertyDescription(e.target.value)}/>
-                <Link to='/wizardTwo'>
-                <button>Next Step</button>
-                </Link>
+                
+                <button onClick={() => this.formPush()}>Next Step</button>
             </div>
         ) 
     }

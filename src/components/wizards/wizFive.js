@@ -6,6 +6,13 @@ import {updateUserid, updateDesiredRent, updateRecommendedRent} from '../../duck
 import axios from 'axios'
 
 class WizFive extends Component{
+    constructor(){
+        super()
+
+        this.state = {
+            recommended_rent: 0
+        }
+    }
     componentDidMount(){
         if(!this.props.userid){
             axios.get('/api/confirmUser').then(res => {
@@ -21,11 +28,15 @@ class WizFive extends Component{
         }
             let {monthly_mortgage} = this.props
     
-            let percentNum = monthly_mortgage * .25
+            let percentNum = Number(monthly_mortgage) * .25
 
-            let rent = percentNum + monthly_mortgage
+            let rent = percentNum + Number(monthly_mortgage)
 
-            updateRecommendedRent(rent)       
+            console.log(rent)
+            this.props.updateRecommendedRent(rent)
+            
+            this.setState({recommended_rent: rent})
+
     }
 
     completeBtn(){
@@ -48,20 +59,21 @@ class WizFive extends Component{
     }
 
     render(){
+        console.log('props rent', this.state.recommended_rent)
         return(
             <div>
                 <WizHeader/>
                 <p>Step 5</p>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_completed'/>
-                <img src='step_inactive'/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
                 {/* 5 dots */}
                 {/* add rent variable */}
-                <p>Recommended Rent {this.props.recommended_rent}</p>
+                <p>Recommended Rent {this.state.recommended_rent}</p>
                 <p>Desired Rent</p>
-                <input onChange={e => updateDesiredRent(e.target.value)}/>
+                <input onChange={e => this.props.updateDesiredRent(e.target.value)}/>
                 <Link to='/wizardFour'><button>Previous Step</button></Link>
                 {/* figure out how you wantto save this to db */}
                 <button onClick={() => this.completeBtn()}>Complete</button>

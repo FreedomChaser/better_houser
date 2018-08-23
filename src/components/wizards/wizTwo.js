@@ -15,6 +15,13 @@ class WizTwo extends Component{
             })
         }
     }
+    formPush(){
+        if(!this.props.address && !this.props.city && !this.props.usState && !this.props.zip){
+            alert('Please fill in all fields')
+        }else{
+           this.props.history.push('/wizardThree') 
+        }
+    }
     
     render(){
         const {updateAddress, updateCity, updateState, updateZip} = this.props
@@ -22,11 +29,11 @@ class WizTwo extends Component{
             <div>
                 <WizHeader/>
                 <p>Step 2</p>
-                <img src='step_completed'/>
-                <img src='step_active'/>
-                <img src='step_inactive'/>
-                <img src='step_inactive'/>
-                <img src='step_inactive'/>
+                <img src='step_completed.png' alt=''/>
+                <img src='step_active.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
+                <img src='step_inactive.png' alt=''/>
 
                 {/* 5 dots */}
                 <p>Address</p>
@@ -40,9 +47,7 @@ class WizTwo extends Component{
                 <Link to='/wizardOne'>
                     <button>Previous Step</button>
                 </Link>
-                <Link to='/wizardThree'>
-                    <button>Next Step</button>
-                </Link>
+                <button onClick={() => this.formPush()}>Next Step</button>
             </div>
         )
     }

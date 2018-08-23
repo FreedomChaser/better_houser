@@ -55,6 +55,7 @@ class Login extends Component{
     render(){
         return(
             <div>
+                <img src='auth_logo.png' alt=''/>
                 <p>Username</p>
                 <input onChange={e => this.setState({username: e.target.value})}></input>
                 <p>Password</p>
