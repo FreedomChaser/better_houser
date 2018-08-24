@@ -1,5 +1,5 @@
 //wiz three img preview not working but alt is sort of
-//dashboard img
+//dashboard img, finish delete button 
 //problems with login and register
 
 import React from 'react'
@@ -15,22 +15,13 @@ class Dashboard extends React.Component{
 
         this.state = {
             homes: [],
-            homeFilter: 0
-            // userid: '',
-            // property_name: '',
-            // property_description: '',
-            // address: '',
-            // city: '',
-            // usState: '',
-            // zip: 0,
-            // img_url: '',
-            // img_alt: '',
-            // loan_amount: 0,
-            // monthly_mortgage: 0,
-            // desired_rent: 0,
-            // recommended_rent: 0
+            homeFilter: 0,
+            filterToggle: false,
+            
         }
         this.deleteHouse = this.deleteHouse.bind(this)
+        this.filterToggle = this.filterToggle.bind(this)
+        this.filterHome = this.filterHome.bind(this)
     }
     
     componentDidMount(){
@@ -43,22 +34,6 @@ class Dashboard extends React.Component{
         }
         axios.get(`/api/userHomes/${this.props.userid}`)
         .then(res => {this.setState({homes: res.data})})
-        
-        // (res => this.setState({
-        //     userid: res.data[0].userid,
-        //     property_name: res.data[0].property_name,
-        //     property_description: res.data[0].property_description,
-        //     address: res.data[0].address,
-        //     city: res.data[0].city,
-        //     usState: res.data[0].usState,
-        //     zip: res.data[0].zip,
-        //     img_url: res.data[0].img_url,
-        //     img_alt: res.data[0].img_alt,
-        //     loan_amount: res.data[0].loan_amount,
-        //     monthly_mortgage: res.data[0].monthly_mortgage,
-        //     desired_rent: res.data[0].desired_rent,
-        //     recommended_rent: res.data[0].recommended_rent
-        // }))
     }
 
     deleteHouse(){
@@ -77,42 +52,107 @@ class Dashboard extends React.Component{
         this.setState({homeFilter: val})
     }
 
+    filterToggle(){
+        this.setState({filterToggle: !this.filterToggle})
+    }
+
     render(){
         
-
-        let home = this.state.homes.map((ele, i) => {
-            // console.log(ele)
-         if(ele.desired_rent >= this.state.homeFilter){
+        console.log('homes', this.state.homes)
+        // console.log(el
+        let displayHome = []
+        // if(this.state.filterToggle === false){
+        //     displayHome = this.state.homes.map((ele, i) => {
+        //         console.log('ele', ele)
+        //         return(
+        //                 <div>
+        //                     <div>                         
+        //                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
+        //                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+        //                     </div>
+        //                     <div>
+        //                         <p>{ele.home_name}</p>
+        //                         <p>{ele.description}</p>
+        //                         <p>{ele.loan}</p>
+        //                         <p>{ele.monthly_mortgage}</p>
+        //                         <p>{ele.recommended_rent}</p>
+        //                         <p>{ele.desired_rent}</p>
+        //                         <p>{ele.address}</p>
+        //                         <p>{ele.city}</p>
+        //                     </div>
+        //                 </div>
+        //             ) 
+        //     })
+        // }else{
+        //     let home = this.state.homes.filter((ele, i) => {
+        //         if(ele.desired_rent >= this.homeFilter){
+        //             return true
+        //         }else{
+        //             return false
+        //         }
+        //     })
+        //     displayHome = home.map((ele, i) => {
+        //         console.log('else', ele)
+        //         return(
+        //             <div>
+        //                 <div>                         
+        //                     <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
+        //                     <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+        //                     <div>
+        //                         <p>{ele.home_name}</p>
+        //                         <p>{ele.description}</p>
+        //                         <p>{ele.loan}</p>
+        //                         <p>{ele.monthly_mortgage}</p>
+        //                         <p>{ele.recommended_rent}</p>
+        //                         <p>{ele.desired_rent}</p>
+        //                         <p>{ele.address}</p>
+        //                         <p>{ele.city}</p>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //                     ) 
+        //     })
+        // }
+        if(this.state.filterToggle){
+            let home = this.state.homes.filter((ele, i) => {
+                if(ele.desired_rent >= this.homeFilter){
+                    console.log('ele', ele)
+                    return true
+                }else{
+                    return false
+                }
+            })
+            console.log('filtered', displayHome)
+           displayHome = home.map((ele, i) => {
+               console.log('mapele', ele)
             return(
-                <div>
-                    <div>
-                        
-                            {/* / */}
-                            <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                            {/* / */}
-                            <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
-                        <div>
-                        <p>{ele.home_name}</p>
-                        <p>{ele.description}</p>
-                        <p>{ele.loan}</p>
-                        <p>{ele.monthly_mortgage}</p>
-                        <p>{ele.recommended_rent}</p>
-                        <p>{ele.desired_rent}</p>
-                        <p>{ele.address}</p>
-                        <p>{ele.city}</p>
-                        </div>
-                    </div>
-                </div>
-            )
-         }else{
-             return(
-                 <div>
-                     <div>
-                         
-                             {/* / */}
-                             <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                             {/* / */}
-                             <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                 <body>
+                     <main>                         
+                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
+                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                         <div>
+                         <p>{ele.home_name}</p>
+                         <p>{ele.description}</p>
+                         <p>Loan: ${ele.loan}</p>
+                         <p>Monthly Mortgage: ${ele.monthly_mortgage}</p>
+                         <p>Recommended Rent: ${ele.recommended_rent}</p>
+                         <p>Desired Rent: ${ele.desired_rent}</p>
+                         <p>Address: {ele.address}</p>
+                         <p>City: {ele.city}</p>
+                         </div>
+                     </main>
+                 </body>
+                )
+            })
+        //unreachable code?
+        // this.filterToggle()
+    }else{
+        displayHome = this.state.homes.map((ele, i) => {
+            console.log('else', ele)
+            return(
+                     <div className='dashMain'>                         
+                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
+                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
                          <div>
                          <p>{ele.home_name}</p>
                          <p>{ele.description}</p>
@@ -124,11 +164,11 @@ class Dashboard extends React.Component{
                          <p>{ele.city}</p>
                          </div>
                      </div>
-                 </div>
-             )
-         }  
+            ) 
         })
+    }
 
+console.log('displayHome', displayHome)
         
         //add state 
         //finish filling out this page with info from db
@@ -136,43 +176,35 @@ class Dashboard extends React.Component{
         //create filter
 
         return(
-            <div>
+            <body>
+                <main>
                 <Link to='/wizardOne'><button>Add new property</button></Link>
                 {/* build out wizard routes */}
                 {/* link add new property to wizOne route */}
                 <p>List properties with "desired rent" greater than: $<input onChange={e => this.filterHome(e.target.value)} placeholder='0'></input>
-                    <button>Filter</button>
-                    <button>Reset</button>
+                    <button onClick={this.filterToggle}>Filter</button>
+                    <button onClick={this.filterToggle}>Reset</button>
                 </p>
                 <div>
                     <p>Home Listings</p>
-                    {home}
+                    {/* {home} */}
+                    {displayHome}
                     {/* add alt tag variable once db's built out */}
                     
 
                     {/* add a componentDidMount to pull a get req for all houses for this userid */}
                 </div> 
-            </div>
+                </main>
+            </body>
         )
     }
 }
 
+
 function mapStateToProps(state){
     const {
             userid, 
-            // property_name, 
-            // property_description, 
-            // address, 
-            // city, 
-            // usState, 
-            // zip,
-            // img_url,
-            // img_alt,
-            // loan_amount,
-            // monthly_mortgages,
-            // desired_rent,
-            // recommended_rent 
-        } = state
+           } = state
 
     return{
         userid,

@@ -27,7 +27,8 @@ class WizFour extends Component{
     render(){
         const {updateLoanAmount, updateMonthlyMortgage} = this.props
         return(
-            <div>
+            <body>
+                <main>
                 <WizHeader/>
                 <p>Step 4</p>
                 <img src='step_completed.png' alt=''/>
@@ -42,7 +43,8 @@ class WizFour extends Component{
                 <input onChange={e => updateMonthlyMortgage(e.target.value)}/>
                 <Link to='/wizardThree'><button>Previous Step</button></Link>
                 <button onClick={() => this.formPush()}>Next Step</button>
-            </div>
+                </main>
+            </body>
         )
     }
 }

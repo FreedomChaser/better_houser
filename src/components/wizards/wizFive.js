@@ -61,7 +61,8 @@ class WizFive extends Component{
     render(){
         console.log('props rent', this.state.recommended_rent)
         return(
-            <div>
+            <body>
+                <main>
                 <WizHeader/>
                 <p>Step 5</p>
                 <img src='step_completed.png' alt=''/>
@@ -77,7 +78,8 @@ class WizFive extends Component{
                 <Link to='/wizardFour'><button>Previous Step</button></Link>
                 {/* figure out how you wantto save this to db */}
                 <button onClick={() => this.completeBtn()}>Complete</button>
-            </div>
+                </main>
+            </body>
         )
     }
 }

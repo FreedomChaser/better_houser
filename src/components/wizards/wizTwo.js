@@ -26,7 +26,8 @@ class WizTwo extends Component{
     render(){
         const {updateAddress, updateCity, updateState, updateZip} = this.props
         return(
-            <div>
+            <body>
+                <main>
                 <WizHeader/>
                 <p>Step 2</p>
                 <img src='step_completed.png' alt=''/>
@@ -48,7 +49,8 @@ class WizTwo extends Component{
                     <button>Previous Step</button>
                 </Link>
                 <button onClick={() => this.formPush()}>Next Step</button>
-            </div>
+                </main>
+            </body>
         )
     }
 }

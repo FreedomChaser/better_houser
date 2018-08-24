@@ -28,22 +28,37 @@ class WizOne extends Component{
     render(){
         const {updatePropertyDescription, updatePropertyName} = this.props
         return(
-            <div>
+            <body>
+                <main>
                 <WizHeader/>
-                <p>Step 1</p>
+                <div className='wizOne'>
+                <div className='oneHeader'>
+                <p className='oneTxt'>Step 1</p>
+                </div>
+                <div>
+                <div className='dots'>
                 <img src='step_active.png' alt='filled in green circle'/>
                 <img src='step_inactive.png' alt='faded out green circle'/>
                 <img src='step_inactive.png' alt='faded out green circle'/>
                 <img src='step_inactive.png' alt='faded out green circle'/>
                 <img src='step_inactive.png' alt='faded out green circle'/>
+                </div>
                 {/* 5 dots imgs */}
-                <p>Property Name</p>
-                <input onChange={e => updatePropertyName(e.target.value)}/>
-                <p>Property Description</p>
-                <input onChange={e => updatePropertyDescription(e.target.value)}/>
-                
-                <button onClick={() => this.formPush()}>Next Step</button>
-            </div>
+                <div className='oneName'>
+                <p className='propName'>Property Name</p>
+                <input className='nameInput' onChange={e => updatePropertyName(e.target.value)}/>
+                </div>
+                <div className='oneDesc'>
+                <p className='propDesc'>Property Description</p>
+                <input className='descInput' onChange={e => updatePropertyDescription(e.target.value)}/>
+                </div>
+                <div className='btnone'>
+                <button className='oneBtn' onClick={() => this.formPush()}>Next Step</button>
+                </div>
+                </div>
+                </div>
+                </main>
+            </body>
         ) 
     }
 }
