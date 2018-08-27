@@ -11,9 +11,10 @@ class WizThree extends Component{
         super()
 
         this.state ={
-            img_url: '',
-            img_alt: '',
+            img_url: 'https://via.placeholder.com/450x300',
+            img_alt: 'preview',
         }
+        this.propsToState = this.propsToState.bind(this)
     }
 
     componentDidMount(){
@@ -32,28 +33,40 @@ class WizThree extends Component{
 
     render(){
         const {updateImgAlt, updateImgUrl} = this.props
+       
         // let displayImg =
         return(
             <body>
             <main>
                 <WizHeader/>
+                <div className='wizOne'>
+                <div className='oneHeader'>
                 <p>Step 3</p>
+                </div>
+                <div className='dots'>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_active.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
-                {/* 5 dots */}
+                </div>
                 {/* output */}
-                {/* ask about how state works with a redux method and component */}
                 {/* fix preview box*/}
+                <div className='threeImg'>
                 <img src={this.state.img_url} alt={this.state.img_alt} className='imgOut'/>
-                <p>Image url</p>
-                <input onChange={e => updateImgUrl(e.target.value)}/>
-                <p>Image alt text</p>
-                <input onChange={e => updateImgAlt(e.target.value)}/>
-                <Link to='/wizardTwo'><button>Previous Step</button></Link>
-                <Link to='/wizardFour'><button>Next Step</button></Link>
+                </div>
+                <div className='threeInput'>
+                <p className='threeUrl'>Image url</p>
+                <input className='nameInput' onChange={e => updateImgUrl(e.target.value)}/>
+                <p className='threeUrl'>Image alt text</p>
+                <input className='nameInput' onChange={e => updateImgAlt(e.target.value)}/>
+                <div className='threeBtn'>
+                <Link to='/wizardTwo'><button className='twoPrev'>Previous Step</button></Link>
+                <button className='previewBtn' onClick={this.propsToState}>Preview url</button>
+                <Link to='/wizardFour'><button className='twoNext'>Next Step</button></Link>
+                </div>
+                </div>
+                </div>
             </main>
             </body>
         )

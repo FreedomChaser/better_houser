@@ -16,12 +16,7 @@ class WizFive extends Component{
     componentDidMount(){
         if(!this.props.userid){
             axios.get('/api/confirmUser').then(res => {
-                this.props.updateUserid(res)
-                // .then(() => {
-                //     
-
-                // })
-                
+                this.props.updateUserid(res)                                
             }).catch(err => {
                 this.props.history.push('/')
             })
@@ -32,7 +27,6 @@ class WizFive extends Component{
 
             let rent = percentNum + Number(monthly_mortgage)
 
-            console.log(rent)
             this.props.updateRecommendedRent(rent)
             
             this.setState({recommended_rent: rent})
@@ -40,23 +34,28 @@ class WizFive extends Component{
     }
 
     completeBtn(){
-        axios.post('/api/complete', {
-            userid: this.props.userid, 
-            property_name: this.props.property_name, 
-            property_description: this.props.property_description, 
-            address: this.props.address, 
-            city: this.props.city, 
-            usState: this.props.usState, 
-            zip: this.props.zip, 
-            img_url: this.props.img_url,
-            img_alt: this.props.img_alt,
-            loan_amount: this.props.loan_amount,
-            monthly_mortgage: this.props.monthly_mortgage,
-            desired_rent: this.props.desired_rent,
-            recommended_rent: this.props.recommended_rent
+        if(!this.props.desired_rent){
+            alert('Please fill in all fields')
+        }else{            
+            console.log('fired')
+            axios.post('/api/complete', {
+                userid: this.props.userid, 
+                property_name: this.props.property_name, 
+                property_description: this.props.property_description, 
+                address: this.props.address, 
+                city: this.props.city, 
+                usState: this.props.usState, 
+                zip: this.props.zip, 
+                img_url: this.props.img_url,
+                img_alt: this.props.img_alt,
+                loan_amount: this.props.loan_amount,
+                monthly_mortgage: this.props.monthly_mortgage,
+                desired_rent: this.props.desired_rent,
+                recommended_rent: this.props.recommended_rent
         })
         .then(() => this.props.history.push('/dashboard'))
     }
+}
 
     render(){
         console.log('props rent', this.state.recommended_rent)
@@ -64,20 +63,31 @@ class WizFive extends Component{
             <body>
                 <main>
                 <WizHeader/>
+                <div className='wizOne'>
+                <div className='oneHeader'>
                 <p>Step 5</p>
+                </div>
+                <div className='dots'>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
-                <img src='step_inactive.png' alt=''/>
+                <img src='step_active.png' alt=''/>
+                </div>
                 {/* 5 dots */}
-                {/* add rent variable */}
-                <p>Recommended Rent {this.state.recommended_rent}</p>
-                <p>Desired Rent</p>
-                <input onChange={e => this.props.updateDesiredRent(e.target.value)}/>
-                <Link to='/wizardFour'><button>Previous Step</button></Link>
-                {/* figure out how you wantto save this to db */}
-                <button onClick={() => this.completeBtn()}>Complete</button>
+                <div className='rentDiv'>
+                <p className='rentRec'>Recommended Rent ${this.state.recommended_rent}</p>
+                </div>
+                <div className='desRent'>
+                <p className='propName'>Desired Rent</p>
+                <input className='nameInput' onChange={e => this.props.updateDesiredRent(e.target.value)}/>
+                </div>
+                <div className='fiveBtns'>
+                <Link to='/wizardFour'><button className='twoPrev'>Previous Step</button></Link>
+                {/* save whole for to db */}
+                <button className='completedBtn' onClick={() => this.completeBtn()}>Complete</button>
+                </div>
+                </div>
                 </main>
             </body>
         )

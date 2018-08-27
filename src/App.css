@@ -43,7 +43,8 @@ main{
 .loginInput{
   width: 80%;
   margin: 5px;
-  border-radius: 2px;
+  margin-bottom: 5px;
+  border-radius: 3px;
   border-width: 1px;
   padding: 2px;
   padding-left: 4px 
@@ -69,7 +70,9 @@ main{
   color: white
 }
 .loginTxt{
-  font-weight: bold
+  font-weight: bold;
+  margin-bottom: 5px;
+  margin-top: 7px
 }
 /* dash */
 .dashMain{
@@ -93,7 +96,12 @@ main{
   font-family: 'Open Sans', sans-serif;
   display: flex;
   justify-content: space-between;
-  padding: 7px
+  padding: 20px
+}
+.logoutBtn{
+  background-color: #519872; 
+  border-style: none;
+  color: white  
 }
 .navLeft{
   color: white;
@@ -107,11 +115,7 @@ then have that added as the alt tag */
   width: 150px;
   object-fit: contain
 }
-.imgOut{
-  height: 500px;
-  width: 600px;
-  object-fit: contain
-}
+
 /* wizards */
 .wizheader{
   width: 100%;
@@ -123,8 +127,8 @@ then have that added as the alt tag */
 }
 .headerBtn{
   /* margin-right: 20px; */
-  height: 25px;
-  width: 70px;
+  height: 30px;
+  width: 75px;
   border-radius: 3px;
   background-color: #FEC2C2;
   border-style: none;
@@ -133,13 +137,14 @@ then have that added as the alt tag */
   font-size: 3vh;
   font-weight: bolder
 }
+
+/* wizardOne */
 .wizOne{
   width: 70%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
 }
 .oneHeader{
   display: flex;
@@ -172,7 +177,7 @@ then have that added as the alt tag */
   font-weight: bold
 }
 .nameInput{
-  border-radius: 2px;
+  border-radius: 3px;
   border-style: 1px
 }
 .propDesc{
@@ -181,7 +186,7 @@ then have that added as the alt tag */
 }
 .descInput{
   height: 80px;
-  border-radius: 2px;
+  border-radius: 3px;
   border-style: 1px
 }
 .btnone{
@@ -197,4 +202,115 @@ then have that added as the alt tag */
   background-color: #3B5249;
   border-style: none;
   color: white;
+}
+
+/* wizardTwo */
+.twoInput{
+  height: 20px;
+  width: 180px;
+  border-radius: 3px;
+  border-style: 1px;
+  /* margin-right: 50px */
+}
+.twoAddress{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.twoin{
+  margin-right: 20px;
+  margin-bottom: 10px
+}
+.twoBtns{
+  display: flex;
+  justify-content: space-between;
+}
+.twoPrev{
+  height: 30px;
+  width: 130px;
+  border-radius: 5px;
+  background-color: #3B5249;
+  border-style: none;
+  color: white;
+}
+.twoNext{
+  height: 30px;
+  width: 90px;
+  border-radius: 5px;
+  background-color: #3B5249;
+  border-style: none;
+  color: white;
+}
+
+/* wiz three */
+.threeImg{
+  width: 450px;
+  height: 300px;
+  margin: 5px
+}
+.imgOut{
+  width: 450px;
+  height: 300px;
+  object-fit: contain;
+  margin: 5px;
+  outline: 1px solid #519872;
+  z-index: 5
+}
+.threeInput{
+  display:flex;
+  flex-direction: column;
+}
+.threeBtn{
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.threeUrl{
+  font-weight: bold;
+  margin: 10px 0 5px 0
+}
+.previewBtn{
+  height: 30px;
+  width: 90px;
+  border-radius: 5px;
+  background-color: #8AEA92;
+  border-style: none;
+}
+
+/* wiz four */
+.fourInputs{
+  display: flex;
+  flex-direction: column;
+  margin: 5px
+}
+.fourBtns{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px
+}
+
+/* wiz five */
+.rentDiv{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  margin: 10px 0 10px 0
+}
+.desRent{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px
+}
+.fiveBtns{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px
+}
+.completedBtn{
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #8AEA92;
+  border-style: none;
 }

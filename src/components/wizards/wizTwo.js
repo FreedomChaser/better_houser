@@ -29,26 +29,42 @@ class WizTwo extends Component{
             <body>
                 <main>
                 <WizHeader/>
-                <p>Step 2</p>
+                <div className='wizOne'>
+                <div className='oneHeader'>
+                <p className='oneTxt'>Step 2</p>
+                </div>
+                <div className='dots'>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_active.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
-
+                </div>
                 {/* 5 dots */}
-                <p>Address</p>
-                <input onChange={e => updateAddress(e.target.value)}/>
-                <p>City</p>
-                <input onChange={e => updateCity(e.target.value)}/>
-                <p>State</p>
-                <input onChange={e => updateState(e.target.value)}/>
-                <p>Zip</p>
-                <input onChange={e => updateZip(e.target.value)}/>
+
+                <p className='propName'>Address</p>
+                <input className='nameInput' onChange={e => updateAddress(e.target.value)}/>
+                <div className='twoAddress'>
+                <div className='twoin'>
+                <p className='propName'>City</p>
+                <input className='twoInput' onChange={e => updateCity(e.target.value)}/>
+                </div>
+                <div className='twoin'>
+                <p className='propName'>State</p>
+                <input className='twoInput' onChange={e => updateState(e.target.value)}/>
+                </div>
+                <div className='twoin'>
+                <p className='propName'>Zip</p>
+                <input className='twoInput' onChange={e => updateZip(e.target.value)}/>
+                </div>
+                </div>
+                <div className='twoBtns'>
                 <Link to='/wizardOne'>
-                    <button>Previous Step</button>
+                    <button className='twoPrev'>Previous Step</button>
                 </Link>
-                <button onClick={() => this.formPush()}>Next Step</button>
+                <button className='twoNext' onClick={() => this.formPush()}>Next Step</button>
+                </div>
+                </div>
                 </main>
             </body>
         )

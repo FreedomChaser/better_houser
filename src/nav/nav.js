@@ -17,7 +17,7 @@ class Nav extends Component{
                     <h1>Houser</h1>
                     <h1>Dashboard</h1>
                 </div>
-                <button onClick={() => this.logout()}>Logout</button>
+                <button className='logoutBtn' onClick={() => this.logout()}>Logout</button>
                 </header>
             )
         }else{

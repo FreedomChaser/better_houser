@@ -1,6 +1,6 @@
-//wiz three img preview not working but alt is sort of
 //dashboard img, finish delete button 
-//problems with login and register
+//add an error catcher for zip to make sure it's a number 
+//and for loan amount to limit to 8 figures
 
 import React from 'react'
 import {connect} from 'react-redux'
@@ -17,6 +17,7 @@ class Dashboard extends React.Component{
             homes: [],
             homeFilter: 0,
             filterToggle: false,
+            
             
         }
         this.deleteHouse = this.deleteHouse.bind(this)
@@ -53,13 +54,10 @@ class Dashboard extends React.Component{
     }
 
     filterToggle(){
-        this.setState({filterToggle: !this.filterToggle})
+        this.setState({filterToggle: !this.state.filterToggle})
     }
 
     render(){
-        
-        console.log('homes', this.state.homes)
-        // console.log(el
         let displayHome = []
         // if(this.state.filterToggle === false){
         //     displayHome = this.state.homes.map((ele, i) => {
@@ -115,7 +113,7 @@ class Dashboard extends React.Component{
         // }
         if(this.state.filterToggle){
             let home = this.state.homes.filter((ele, i) => {
-                if(ele.desired_rent >= this.homeFilter){
+                if(ele.desired_rent >= this.state.homeFilter){
                     console.log('ele', ele)
                     return true
                 }else{
@@ -126,22 +124,24 @@ class Dashboard extends React.Component{
            displayHome = home.map((ele, i) => {
                console.log('mapele', ele)
             return(
-                 <body>
-                     <main>                         
+                <div className='dashMain'>
+                    <div className='dashImg'>                                         
                          <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
-                         <div>
+                         <img src={`${ele.img_url}`||`https://via.placeholder.com/150x150`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                    </div>
+                    <div className='dashHome'>
                          <p>{ele.home_name}</p>
                          <p>{ele.description}</p>
+                    </div>
+                    <div class='dashDeets'>
                          <p>Loan: ${ele.loan}</p>
                          <p>Monthly Mortgage: ${ele.monthly_mortgage}</p>
                          <p>Recommended Rent: ${ele.recommended_rent}</p>
                          <p>Desired Rent: ${ele.desired_rent}</p>
                          <p>Address: {ele.address}</p>
                          <p>City: {ele.city}</p>
-                         </div>
-                     </main>
-                 </body>
+                    </div>
+                </div>
                 )
             })
         //unreachable code?
@@ -150,12 +150,16 @@ class Dashboard extends React.Component{
         displayHome = this.state.homes.map((ele, i) => {
             console.log('else', ele)
             return(
-                     <div className='dashMain'>                         
-                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
-                         <div>
-                         <p>{ele.home_name}</p>
-                         <p>{ele.description}</p>
+                     <div className='dashMain'>
+                        <div className='dashImg'>                         
+                            <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
+                            <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                        </div>
+                        <div className='dashHome'>
+                            <p>{ele.home_name}</p>
+                            <p>{ele.description}</p>
+                         </div>
+                         <div class='dashDeets'>
                          <p>{ele.loan}</p>
                          <p>{ele.monthly_mortgage}</p>
                          <p>{ele.recommended_rent}</p>

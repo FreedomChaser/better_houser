@@ -61,8 +61,7 @@ app.post('/api/newUser', async (req, res, next) => {
         res.sendStatus(422)
     } else {
         let newUser = await db.create_user(username, hashedPassword)
-        req.session.userid = newUser.userid
-
+        req.session.userid = newUser[0].userid
         let {userid} = req.session
         res.status(200).send({userid})
     }
@@ -73,19 +72,23 @@ app.post('/api/login', async (req, res) => {
     const db = req.app.get('db')
     let { username, password } = req.body
 
-    // let salt = await bcrypt.genSalt(10)
-
     let foundUser = await db.find_user(username)
-
+    console.log(foundUser)
+    
+    if(foundUser[0]){
     let answer = await bcrypt.compare(password, foundUser[0].encryptedpassword)
-    if (answer) {
-        req.session.userid = foundUser[0].userid
-        let { userid } = req.session;
-        res.status(200).send({ userid })
-    } else {
-        console.log(res)
-        res.sendStatus(403);
-    }
+        if (answer) {
+            req.session.userid = foundUser[0].userid
+            let { userid } = req.session;
+            res.status(200).send({ userid })
+        }else{
+            res.sendStatus(403)
+        }
+    
+    }else{
+            res.sendStatus(403)
+        }
+     
 
 
     // bcrypt.compare(password, foundUser[0].encryptedpassword, function (err, result) {

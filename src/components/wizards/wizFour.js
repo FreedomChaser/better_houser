@@ -30,19 +30,29 @@ class WizFour extends Component{
             <body>
                 <main>
                 <WizHeader/>
-                <p>Step 4</p>
+                <div className='wizOne'>
+                <div className='oneHeader'>
+                <p className='oneTxt'>Step 4</p>
+                </div>
+                <div className='dots'>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_completed.png' alt=''/>
                 <img src='step_active.png' alt=''/>
                 <img src='step_inactive.png' alt=''/>
+                </div>
                 {/* 5 dots */}
-                <p>Loan Amount</p>
-                <input onChange={e => updateLoanAmount(e.target.value)}/>
-                <p>Monthly Mortgage</p>
-                <input onChange={e => updateMonthlyMortgage(e.target.value)}/>
-                <Link to='/wizardThree'><button>Previous Step</button></Link>
-                <button onClick={() => this.formPush()}>Next Step</button>
+                <div className='fourInputs'>
+                <p className='propName'>Loan Amount</p>
+                <input className='nameInput' onChange={e => updateLoanAmount(e.target.value)}/>
+                <p className='propName'>Monthly Mortgage</p>
+                <input className='nameInput' onChange={e => updateMonthlyMortgage(e.target.value)}/>
+                </div>
+                <div className='fourBtns'>
+                <Link to='/wizardThree'><button className='twoPrev'>Previous Step</button></Link>
+                <button className='twoNext' onClick={() => this.formPush()}>Next Step</button>
+                </div>
+                </div>
                 </main>
             </body>
         )
