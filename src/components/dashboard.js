@@ -1,6 +1,6 @@
-//dashboard img, finish delete button 
-//add an error catcher for zip to make sure it's a number 
 //and for loan amount to limit to 8 figures
+//make sure all numbers have an error catcher
+//auto-clear dash input
 
 import React from 'react'
 import {connect} from 'react-redux'
@@ -37,80 +37,29 @@ class Dashboard extends React.Component{
         .then(res => {this.setState({homes: res.data})})
     }
 
-    deleteHouse(){
-        axios.delete(`/api/deleteHouse/${this.props.userid}`, {
-        //   loan_amount: this.state.loan_amount,
-        //   monthly_mortgage: this.state.monthly_mortgage,
-        //   recommended_rent: this.state.recommended_rent,
-        //   desired_rent: this.state.desired_rent,
-        //   address: this.state.address,
-        //   city: this.state.city  
-        })
-        // .then(res => alert('House deleted'))
+    deleteHouse(homeid){
+        console.log('firing')
+        axios.delete(`/api/deleteHouse/${this.props.userid}/${homeid}`)
+        .then(() => {axios.get(`/api/userHomes/${this.props.userid}`)
+            .then(res => {this.setState({homes:res.data})})
+    })
     }
-
+    resetState(){
+        this.setState({homeFilter: 0})
+    }
     filterHome(val){
         this.setState({homeFilter: val})
     }
 
     filterToggle(){
         this.setState({filterToggle: !this.state.filterToggle})
+        // this.resetState()
     }
 
     render(){
+    console.log('Home', this.state.homes)
+
         let displayHome = []
-        // if(this.state.filterToggle === false){
-        //     displayHome = this.state.homes.map((ele, i) => {
-        //         console.log('ele', ele)
-        //         return(
-        //                 <div>
-        //                     <div>                         
-        //                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-        //                         <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
-        //                     </div>
-        //                     <div>
-        //                         <p>{ele.home_name}</p>
-        //                         <p>{ele.description}</p>
-        //                         <p>{ele.loan}</p>
-        //                         <p>{ele.monthly_mortgage}</p>
-        //                         <p>{ele.recommended_rent}</p>
-        //                         <p>{ele.desired_rent}</p>
-        //                         <p>{ele.address}</p>
-        //                         <p>{ele.city}</p>
-        //                     </div>
-        //                 </div>
-        //             ) 
-        //     })
-        // }else{
-        //     let home = this.state.homes.filter((ele, i) => {
-        //         if(ele.desired_rent >= this.homeFilter){
-        //             return true
-        //         }else{
-        //             return false
-        //         }
-        //     })
-        //     displayHome = home.map((ele, i) => {
-        //         console.log('else', ele)
-        //         return(
-        //             <div>
-        //                 <div>                         
-        //                     <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-        //                     <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
-        //                     <div>
-        //                         <p>{ele.home_name}</p>
-        //                         <p>{ele.description}</p>
-        //                         <p>{ele.loan}</p>
-        //                         <p>{ele.monthly_mortgage}</p>
-        //                         <p>{ele.recommended_rent}</p>
-        //                         <p>{ele.desired_rent}</p>
-        //                         <p>{ele.address}</p>
-        //                         <p>{ele.city}</p>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //                     ) 
-        //     })
-        // }
         if(this.state.filterToggle){
             let home = this.state.homes.filter((ele, i) => {
                 if(ele.desired_rent >= this.state.homeFilter){
@@ -120,26 +69,28 @@ class Dashboard extends React.Component{
                     return false
                 }
             })
-            console.log('filtered', displayHome)
+            // console.log('filtered', displayHome)
            displayHome = home.map((ele, i) => {
-               console.log('mapele', ele)
+            //    console.log('mapele', ele)
             return(
-                <div className='dashMain'>
+                <div className='dashHomes'>
                     <div className='dashImg'>                                         
-                         <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                         <img src={`${ele.img_url}`||`https://via.placeholder.com/150x150`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                         <img className='imgThumb' src={`${ele.img_url}`||`https://via.placeholder.com/150x150`} alt={`${ele.img_alt}`}/>
                     </div>
                     <div className='dashHome'>
-                         <p>{ele.home_name}</p>
+                         <p className='dashHomeName'>{ele.home_name}</p>
                          <p>{ele.description}</p>
                     </div>
                     <div class='dashDeets'>
-                         <p>Loan: ${ele.loan}</p>
-                         <p>Monthly Mortgage: ${ele.monthly_mortgage}</p>
-                         <p>Recommended Rent: ${ele.recommended_rent}</p>
-                         <p>Desired Rent: ${ele.desired_rent}</p>
-                         <p>Address: {ele.address}</p>
-                         <p>City: {ele.city}</p>
+                        <div className='delete'>
+                         <p className='dashHomeDeets'>Loan: ${ele.loan}</p>
+                         <img src='delete_icon.png' alt='click to delete' onClick={() => this.deleteHouse(ele.home_id)}/>
+                        </div>
+                         <p className='dashHomeDeets'>Monthly Mortgage: ${ele.monthly_mortgage}</p>
+                         <p className='dashHomeDeets'>Recommended Rent: ${ele.recommended_rent}</p>
+                         <p className='dashHomeDeets'>Desired Rent: ${ele.desired_rent}</p>
+                         <p className='dashHomeDeets'>Address: {ele.address}</p>
+                         <p className='dashHomeDeets'>City: {ele.city}</p>
                     </div>
                 </div>
                 )
@@ -150,29 +101,30 @@ class Dashboard extends React.Component{
         displayHome = this.state.homes.map((ele, i) => {
             console.log('else', ele)
             return(
-                     <div className='dashMain'>
-                        <div className='dashImg'>                         
-                            <img src='delete_icon.png' alt='click to delete' onClick={this.deleteHouse}/>
-                            <img src={`${ele.img_url}`} className='imgThumb' alt={`${ele.img_alt}`}/>
+                <div className='dashHomes'>
+                    <div className='dashImg'>                                         
+                         <img className='imgThumb' src={`${ele.img_url}`||`https://via.placeholder.com/150x150`} alt={`${ele.img_alt}`}/>
+                    </div>
+                    <div className='dashHome'>
+                         <p className='dashHomeName'>{ele.home_name}</p>
+                         <p>{ele.description}</p>
+                    </div>
+                    <div class='dashDeets'>
+                        <div className='delete'>
+                         <p className='dashHomeDeets'>Loan: ${ele.loan}</p>
+                         <img src='delete_icon.png' alt='click to delete' onClick={() => this.deleteHouse(ele.home_id)}/>
                         </div>
-                        <div className='dashHome'>
-                            <p>{ele.home_name}</p>
-                            <p>{ele.description}</p>
-                         </div>
-                         <div class='dashDeets'>
-                         <p>{ele.loan}</p>
-                         <p>{ele.monthly_mortgage}</p>
-                         <p>{ele.recommended_rent}</p>
-                         <p>{ele.desired_rent}</p>
-                         <p>{ele.address}</p>
-                         <p>{ele.city}</p>
-                         </div>
-                     </div>
-            ) 
+                         <p className='dashHomeDeets'>Monthly Mortgage: ${ele.monthly_mortgage}</p>
+                         <p className='dashHomeDeets'>Recommended Rent: ${ele.recommended_rent}</p>
+                         <p className='dashHomeDeets'>Desired Rent: ${ele.desired_rent}</p>
+                         <p className='dashHomeDeets'>Address: {ele.address}</p>
+                         <p className='dashHomeDeets'>City: {ele.city}</p>
+                    </div>
+                </div>
+                )
         })
     }
 
-console.log('displayHome', displayHome)
         
         //add state 
         //finish filling out this page with info from db
@@ -181,22 +133,18 @@ console.log('displayHome', displayHome)
 
         return(
             <body>
-                <main>
-                <Link to='/wizardOne'><button>Add new property</button></Link>
+                <main id='dashMain'>
+                <Link to='/wizardOne'><button className='addBtn'>Add new property</button></Link>
                 {/* build out wizard routes */}
                 {/* link add new property to wizOne route */}
-                <p>List properties with "desired rent" greater than: $<input onChange={e => this.filterHome(e.target.value)} placeholder='0'></input>
-                    <button onClick={this.filterToggle}>Filter</button>
-                    <button onClick={this.filterToggle}>Reset</button>
+                <p>List properties with "desired rent" greater than: $<input className='dashInput' onChange={e => this.filterHome(e.target.value)} placeholder='0' ></input>
+                    <button className='filterBtn' onClick={this.filterToggle}>Filter</button>
+                    <button className='resetBtn' onClick={this.filterToggle}>Reset</button>
                 </p>
-                <div>
-                    <p>Home Listings</p>
+                <div className='homes'>
+                    <p className='dashHeader'>Home Listings</p>
                     {/* {home} */}
                     {displayHome}
-                    {/* add alt tag variable once db's built out */}
-                    
-
-                    {/* add a componentDidMount to pull a get req for all houses for this userid */}
                 </div> 
                 </main>
             </body>

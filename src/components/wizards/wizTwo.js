@@ -22,9 +22,21 @@ class WizTwo extends Component{
            this.props.history.push('/wizardThree') 
         }
     }
+    zipCheck(val){
+        let zipPattern = /^[0-9]+$/
+
+        let str = val
+
+        if(zipPattern.test(str)){
+            updateZip(val)
+        }else{
+            alert('zip be 5 numbers')
+        }
+    }
     
     render(){
         const {updateAddress, updateCity, updateState, updateZip} = this.props
+        
         return(
             <body>
                 <main>
@@ -55,7 +67,7 @@ class WizTwo extends Component{
                 </div>
                 <div className='twoin'>
                 <p className='propName'>Zip</p>
-                <input className='twoInput' onChange={e => updateZip(e.target.value)}/>
+                <input className='twoInput' onChange={e => this.zipCheck(e.target.value)}/>
                 </div>
                 </div>
                 <div className='twoBtns'>

@@ -168,12 +168,11 @@ app.get('/api/userHomes/:userid', async (req, res) => {
     res.status(200).send(findHouses)
 })
 
-app.delete('/api/deleteHouse/:userid', async (req, res) => {
+app.delete('/api/deleteHouse/:userid/:homeid', async (req, res) => {
     const db = req.app.get('db')
-    const {userid} = req.params
-    const {loan_amount, monthly_mortgage, recommended_rent, desired_rent, address, city} = req.body
+    const {userid, homeid} = req.params
 
-    let deleteHouse = await db.delete_house(userid, loan_amount, monthly_mortgage, recommended_rent, desired_rent, address, city)
+    let deleteHouse = await db.delete_house(userid, homeid)
 
     res.sendStatus(200)
 })

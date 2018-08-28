@@ -50,7 +50,7 @@ class WizOne extends Component{
                 </div>
                 <div className='oneDesc'>
                 <p className='propDesc'>Property Description</p>
-                <input className='descInput' onChange={e => updatePropertyDescription(e.target.value)}/>
+                <textarea rows='5' className='descInput' onChange={e => updatePropertyDescription(e.target.value)}/>
                 </div>
                 <div className='btnone'>
                 <button className='oneBtn' onClick={() => this.formPush()}>Next Step</button>
